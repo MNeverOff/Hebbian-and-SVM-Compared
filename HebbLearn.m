@@ -1,15 +1,16 @@
 function [Theta2] = SVMLearn(Theta1, Theta2, ...
+                                   desired_digit, ...
                                    input_layer_size, ...
                                    hidden_layer_size, ...
                                    num_labels, ...
-                                   X, y,k)
+                                   X, y, k, threshold)
 
 % Valuable initialisations
 m = size(X, 1);
-isFive = y == 5;
-topLimit = 1;
-lowLimit = -1;
-
+isCorrect = y == desired_digit;
+% topLimit = 1;
+% lowLimit = -1;
+L = zeros(hidden_layer_size, m);
 %tracking vars
 hit_percents = zeros(1,m);
 w1pc = 0; w1mc = 0; w2pc = 0; w2mc = 0;
@@ -26,9 +27,8 @@ w1p = 0; w1m = 0; w2p = 0; w2m = 0;
 % z3 = a2*Theta2';
 % a3 = sigmoid(z3);
 
-figure;
-displayData(X(1:100,:));
-L = zeros(hidden_layer_size, m);
+% figure;
+% displayData(X(1:100,:));
 
 for I = 1:m
 %     a1 = [1 X(I,:)];
@@ -40,7 +40,7 @@ for I = 1:m
 %     a3 = (z3(1) - z3(2));
     a3 = find(z3 == max(z3)) == 1;
     
-    iF = isFive(I);
+    iC = isCorrect(I);
     hit_percents(I) = mean(a2);
     delta = k;
     
@@ -52,59 +52,43 @@ for I = 1:m
         if (a2(N))
            L(N,I) = 1; 
         end
-        if (a2(N) && iF && a3)
+        if (a2(N) && iC && a3)
             Theta2(1,N) = Theta2(1,N)+delta;
             w1pc = w1pc+1;
             w1p = w1p + delta;
-        elseif (a2(N) && iF && ~a3)
+        elseif (a2(N) && iC && ~a3)
             Theta2(2,N) = Theta2(2,N)-delta;
             w2mc = w2mc+1;
             w2m = w2m + delta;
 
-        elseif (a2(N) && ~iF && a3)
+        elseif (a2(N) && ~iC && a3)
             Theta2(1,N) = Theta2(1,N)-delta;
             w1mc = w1mc+1;
             w1m = w1m + delta;
-        elseif (a2(N) && ~iF && ~a3)
+        elseif (a2(N) && ~iC && ~a3)
             Theta2(2,N) = Theta2(2,N)+delta;
             w2pc = w2pc+1;
             w2p = w2p + delta;
         end
     end
     
-    Theta2(1,:) = max(min(Theta2(1,:),topLimit),lowLimit);
-    Theta2(2,:) = max(min(Theta2(2,:),topLimit),lowLimit);
+    Theta2(1,:) = max(min(Theta2(1,:),threshold),-threshold);
+    Theta2(2,:) = max(min(Theta2(2,:),threshold),-threshold);
 end
 
 % -------------------------------------------------------------
 
-% active_threshold = 0.15;
-% activeNeurons = sum(mean(L,2) >= active_threshold);
-% activeIndexes = find(mean(L,2) >= active_threshold);
-% %Replace L with Lactive
-% Lactive = zeros(activeNeurons,size(L,2));
-% for K=1:activeNeurons
-%     if (mean(L(K,:)) >= active_threshold)
-%        Lactive(K,:) = L(K,:);
-%     end
-%     K = K-1;
-% end
-Lactive = L;
-
 % Histogramm of active ("decicion-making") neurons
 figure;
-five=find(y == 5);
-nf= find(y==7);
-
-five=find(y == 5);
-nf= find(y==7);
-score=(sum(Lactive(:,five),2)-sum(Lactive(:,nf),2))./(sum(Lactive,2)+1);
+five = find(y == desired_digit);
+nf = find(y == desired_digit);
+score=(sum(L(:,five),2)-sum(L(:,nf),2))./(sum(L,2)+1);
 hist(score)
 
 % Theta1 hits
-[A B]=sort(Lactive(:,1),1);
+[A B]=sort(L(:,1),1);
 figure;
-C= Lactive(B,:);
+C= L(B,:);
 imagesc(C(:,1:25))
 set(gca,'xticklabel',y);
 set(gca,'xtick',1:25);
