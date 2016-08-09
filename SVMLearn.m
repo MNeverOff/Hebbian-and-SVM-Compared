@@ -41,6 +41,7 @@ for I = 1:m
     z2 = a1*Theta1';
 %     a2 = [1 heavMax(z2)];
     a2 = heavMax(z2);
+    a2 = a1;
     z3 = a2*Theta2';
     a3 = (z3(1) - z3(2));
 %     a3 = find(z3 == max(z3)) == 1;

@@ -5,7 +5,7 @@ function [HTr,HTe,STr,STe] = start(one,many,svm,hebb,desired_digit,iterations, .
 %% Setup the parameters of model
 
 input_layer_size  = 784;    % 28x28 Input Images of Digits
-hidden_layer_size = 3000;   % hidden units
+hidden_layer_size = 784;   % hidden units
 num_labels = 2;             % 2 labels, n1 and n2 (isN, notN)
 k = 0.001;                  % learning rate
 connectivity_rate = 0.1;    % connectivity rate
@@ -23,10 +23,10 @@ fprintf('Loading and Visualizing Data ...\n')
 X = loadMNISTImages('train-images.idx3-ubyte')';
 y = loadMNISTLabels('train-labels.idx1-ubyte');
 
-for T=1:9
-   X = [X; loadMNISTImages('train-images.idx3-ubyte')'];
-   y = [y; loadMNISTLabels('train-labels.idx1-ubyte')];
-end
+% for F = 1:1
+%    X = [X; X]; 
+%    y = [y; y];
+% end
 
 X2 = loadMNISTImages('t10k-images.idx3-ubyte')';
 y2 = loadMNISTLabels('t10k-labels.idx1-ubyte');
@@ -46,12 +46,12 @@ Theta2 = abs(randInitializeWeights(hidden_layer_size, num_labels));
 %% ================ Calling methods ================
 if (one)
     for I = 1:iterations
-       for second_digit = 3:3
+       for second_digit = 0:9
            close all; 
            fprintf('\n Balancing data sets ...\n');
            
-            [xF,yF] = balanceSet(X,y,desired_digit,second_digit);
-            [x2F,y2F] = balanceSet(X2,y2,desired_digit,second_digit);
+           [xF,yF] = balanceSet(X,y,desired_digit,second_digit);
+           [x2F,y2F] = balanceSet(X2,y2,desired_digit,second_digit);
            
            [HTr,HTe,STr,STe] = ONEvsONE(svm, hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, ...
                second_digit, input_layer_size, hidden_layer_size, num_labels, k, ...
