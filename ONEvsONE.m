@@ -1,11 +1,7 @@
 function [HTr,HTe,STr,STe] = ONEvsONE(svm, hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, second_digit, ...
-    input_layer_size, hidden_layer_size, num_labels, k,HTr,HTe,STr,STe, I, correction)
+    input_layer_size, hidden_layer_size, num_labels, k,HTr,HTe,STr,STe, I, correction, xF,yF,x2F,y2F)
 
 MTheta2 = Theta2;
-
-fprintf('\n Balancing data sets ...\n');
-[xF,yF] = balanceSet(X,y,desired_digit,second_digit);
-[x2F,y2F] = balanceSet(X2,y2,desired_digit,second_digit);
 
 if (svm)
 %% ================= Part 7: Training SVM against 1 digit =================

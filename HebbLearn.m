@@ -81,7 +81,7 @@ end
 % Histogramm of active ("decicion-making") neurons
 figure;
 five = find(y == desired_digit);
-nf = find(y == desired_digit);
+nf = find(y ~= desired_digit);
 score=(sum(L(:,five),2)-sum(L(:,nf),2))./(sum(L,2)+1);
 hist(score)
 

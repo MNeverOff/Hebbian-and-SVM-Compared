@@ -8,8 +8,8 @@ many = false;
 svm = true;
 hebb = true;
 digit = 5;
-iterations = 19;
-correction = linspace(1.5,2.5,iterations);
+iterations = 1;
+correction = linspace(2.39,2.39,iterations);
 
 HTr = zeros(10,iterations);
 HTe = zeros(10,iterations);

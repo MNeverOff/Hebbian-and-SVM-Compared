@@ -19,6 +19,7 @@ end
 num = size(yF,1);
 xF = zeros(num,input_layer_size);
 
+k = 0;
 j = 1;
 for I=1:size(y,1)
     if (y(I) == digit1)

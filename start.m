@@ -23,6 +23,11 @@ fprintf('Loading and Visualizing Data ...\n')
 X = loadMNISTImages('train-images.idx3-ubyte')';
 y = loadMNISTLabels('train-labels.idx1-ubyte');
 
+for T=1:9
+   X = [X; loadMNISTImages('train-images.idx3-ubyte')'];
+   y = [y; loadMNISTLabels('train-labels.idx1-ubyte')];
+end
+
 X2 = loadMNISTImages('t10k-images.idx3-ubyte')';
 y2 = loadMNISTLabels('t10k-labels.idx1-ubyte');
 
@@ -41,15 +46,30 @@ Theta2 = abs(randInitializeWeights(hidden_layer_size, num_labels));
 %% ================ Calling methods ================
 if (one)
     for I = 1:iterations
-       for second_digit = 0:9
+       for second_digit = 3:3
            close all; 
+           fprintf('\n Balancing data sets ...\n');
+           
+            [xF,yF] = balanceSet(X,y,desired_digit,second_digit);
+            [x2F,y2F] = balanceSet(X2,y2,desired_digit,second_digit);
+           
            [HTr,HTe,STr,STe] = ONEvsONE(svm, hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, ...
                second_digit, input_layer_size, hidden_layer_size, num_labels, k, ...
-               HTr, HTe, STr, STe, I, correction);
+               HTr, HTe, STr, STe, I, correction,xF, yF, x2F, y2F);
        end
     end
 end
 if (many)
-    
+    fprintf('\n Extracting data sets ...\n');
+           
+    [xF,yF] = extractSet(X,y,desired_digit,50);
+    [x2F,y2F] = extractSet(X2,y2,desired_digit,50);
+            
+    for I = 1:iterations
+           close all; 
+           [HTr,HTe,STr,STe] = ONEvsONE(svm, hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, ...
+               0, input_layer_size, hidden_layer_size, num_labels, k, ...
+               HTr, HTe, STr, STe, I, correction,xF, yF, x2F, y2F);
+    end
 end
 

@@ -57,19 +57,23 @@ for I = 1:m
         if (a2(N))
            L(N,I) = 1; 
         end
+        % if "five" and correct - grow w1
         if (a2(N) && iC && ((0 <= a3) && (a3 <= threshold)))
             Theta2(1,N) = Theta2(1,N)+delta;
             w1pc(N,I) = 1;
             w1p = w1p + delta;
+        % if "five" and incorrect - penalise w2
         elseif (a2(N) && iC && (a3 < 0))
             Theta2(2,N) = Theta2(2,N)-delta;
             w2mc(N,I) = 1;
             w2m = w2m + delta;
 
+        % if "not five" and incorrect - penalise w1
         elseif (a2(N) && ~iC && (0 < a3))
             Theta2(1,N) = Theta2(1,N)-delta;
             w1mc(N,I) = 1;
             w1m = w1m + delta;
+        % if "not five" and correct - grow w1
         elseif (a2(N) && ~iC && (-threshold <= a3) && (a3 <= 0))
             Theta2(2,N) = Theta2(2,N)+delta;
             w2pc(N,I) = 1;

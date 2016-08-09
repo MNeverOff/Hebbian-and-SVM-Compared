@@ -7,7 +7,7 @@ function p = predictSVM(Theta1, Theta2, X)
 m = size(X, 1);
 num_labels = size(Theta2, 1);
 
-p = zeros(size(X, 1));
+p = zeros(size(X, 1),size(X,2));
 
 h1 = heav(X * Theta1');
 h2 = (h1 * Theta2');
