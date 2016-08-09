@@ -5,7 +5,7 @@ function [HTr,HTe,STr,STe] = start(one,many,svm,hebb,desired_digit,iterations, .
 %% Setup the parameters of model
 
 input_layer_size  = 784;    % 28x28 Input Images of Digits
-hidden_layer_size = 784;   % hidden units
+hidden_layer_size = 300;   % hidden units
 num_labels = 2;             % 2 labels, n1 and n2 (isN, notN)
 k = 0.001;                  % learning rate
 connectivity_rate = 0.1;    % connectivity rate
@@ -62,9 +62,10 @@ end
 if (many)
     fprintf('\n Extracting data sets ...\n');
            
-    [xF,yF] = extractSet(X,y,desired_digit,50);
-    [x2F,y2F] = extractSet(X2,y2,desired_digit,50);
-            
+    [xF,yF] = extractSet(X,y,desired_digit,10);
+%     [x2F,y2F] = extractSet(X2,y2,desired_digit,10);
+    x2F = X2; y2F = y2;
+    
     for I = 1:iterations
            close all; 
            [HTr,HTe,STr,STe] = ONEvsONE(svm, hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, ...
