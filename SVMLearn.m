@@ -3,7 +3,7 @@ function [Theta2] = SVMLearn(Theta1, Theta2, ...
                                    input_layer_size, ...
                                    hidden_layer_size, ...
                                    num_labels, ...
-                                   X, y, k, threshold)
+                                   X, y, k)
 
 % Valuable initialisations
 m = size(X, 1);
@@ -59,7 +59,7 @@ for I = 1:m
            L(N,I) = 1; 
         end
         % if "five" and correct - grow w1
-        if (a2(N) && iC && ((0 <= a3) && (a3 <= threshold)))
+        if (a2(N) && iC && ((0 <= a3) && (a3 <= 1)))
             Theta2(1,N) = Theta2(1,N)+delta;
             w1pc(N,I) = 1;
             w1p = w1p + delta;
@@ -75,7 +75,7 @@ for I = 1:m
             w1mc(N,I) = 1;
             w1m = w1m + delta;
         % if "not five" and correct - grow w1
-        elseif (a2(N) && ~iC && (-threshold <= a3) && (a3 <= 0))
+        elseif (a2(N) && ~iC && (-1 <= a3) && (a3 <= 0))
             Theta2(2,N) = Theta2(2,N)+delta;
             w2pc(N,I) = 1;
             w2p = w2p + delta;
@@ -88,42 +88,42 @@ end
 % -------------------------------------------------------------
 
 % Histogramm of active ("decicion-making") neurons
-figure;
-correct = find(y == desired_digit);
-incorrect = find(y ~= desired_digit);
-score=(sum(L(:,correct),2)-sum(L(:,incorrect),2))./(sum(L,2)+1);
-hist(score)
-
-% Theta1 hits
-[A B]=sort(L(:,1),1);
-figure;
-C= L(B,:);
-imagesc(C(:,1:25))
-set(gca,'xticklabel',y);
-set(gca,'xtick',1:25);
-
-% score-weight "Five" matrix
-figure;
-title('Weight/Score for Positive');
-scatter(Theta2(1,:),score)
-xlabel('Weights') % x-axis label
-ylabel('Scores') % y-axis label
-
-% score-weight "Not-Five" matrix
-figure;
-title('Weight/Score for Negative');
-scatter(Theta2(2,:),score)
-xlabel('Weights') % x-axis label
-ylabel('Scores') % y-axis label
-
-%tracking
-sum_changes = sum(sum(w1pc))+sum(sum(w1mc))+sum(sum(w2pc))+sum(sum(w2mc));
-fprintf('\n Average neuron hit percent: %f', mean(hit_percents));
-fprintf('\n Weight adjustement percent: %f', (sum_changes/(m*hidden_layer_size)));
-fprintf('\n Added to w1 in total: %f (%d)', w1p,sum(sum(w1pc)));
-fprintf('\n Substracted from w1 in total: %f (%d)', w1m, sum(sum(w1mc)));
-fprintf('\n Added to w2 in total: %f (%d)', w2p, sum(sum(w2pc)));
-fprintf('\n Substracted from w2 in total: %f (%d)', w2m, sum(sum(w2mc)));
+% figure;
+% correct = find(y == desired_digit);
+% incorrect = find(y ~= desired_digit);
+% score=(sum(L(:,correct),2)-sum(L(:,incorrect),2))./(sum(L,2)+1);
+% hist(score)
+% 
+% % Theta1 hits
+% [A B]=sort(L(:,1),1);
+% figure;
+% C= L(B,:);
+% imagesc(C(:,1:25))
+% set(gca,'xticklabel',y);
+% set(gca,'xtick',1:25);
+% 
+% % score-weight "Five" matrix
+% figure;
+% title('Weight/Score for Positive');
+% scatter(Theta2(1,:),score)
+% xlabel('Weights') % x-axis label
+% ylabel('Scores') % y-axis label
+% 
+% % score-weight "Not-Five" matrix
+% figure;
+% title('Weight/Score for Negative');
+% scatter(Theta2(2,:),score)
+% xlabel('Weights') % x-axis label
+% ylabel('Scores') % y-axis label
+% 
+% %tracking
+% sum_changes = sum(sum(w1pc))+sum(sum(w1mc))+sum(sum(w2pc))+sum(sum(w2mc));
+% fprintf('\n Average neuron hit percent: %f', mean(hit_percents));
+% fprintf('\n Weight adjustement percent: %f', (sum_changes/(m*hidden_layer_size)));
+% fprintf('\n Added to w1 in total: %f (%d)', w1p,sum(sum(w1pc)));
+% fprintf('\n Substracted from w1 in total: %f (%d)', w1m, sum(sum(w1mc)));
+% fprintf('\n Added to w2 in total: %f (%d)', w2p, sum(sum(w2pc)));
+% fprintf('\n Substracted from w2 in total: %f (%d)', w2m, sum(sum(w2mc)));
 
 % =========================================================================
 
