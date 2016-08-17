@@ -47,16 +47,20 @@ if (one)
        close all; 
        fprintf('\n Balancing data sets ...\n');
 
-       xF = X; yF = y;
-%            [xF,yF] = balanceSet(X,y,desired_digit,second_digit);
-%            [x2F,y2F] = balanceSet(X2,y2,desired_digit,second_digit);
-       x2F = X2; y2F = y2;
+%        xF = X; yF = y;
+           [xF,yF] = balanceSet(X,y,desired_digit,second_digit);
+           [x2F,y2F] = balanceSet(X2,y2,desired_digit,second_digit);
+%        x2F = X2; y2F = y2;
 
        [HTr,HTe,STr,STe] = ONEvsONE(svm, hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, ...
            second_digit, input_layer_size, hidden_layer_size, num_labels, k, ...
            HTr, HTe, STr, STe, J, xF, yF, x2F, y2F);
    end
-   save(date,'HTr','HTe','STr','STe');
+   ovm = matfile('OvO.mat','Writable',true);
+   ovm.HTr(1:size(HTr,1),J) = HTr(:,J);
+   ovm.HTe(1:size(HTe,1),J) = HTe(:,J);
+   ovm.STr(1:size(STr,1),J) = STr(:,J);
+   ovm.STe(1:size(STe,1),J) = STe(:,J);
 end
 
 if (many)
@@ -71,6 +75,11 @@ if (many)
    [HTr,HTe,STr,STe] = ONEvsONE(svm, hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, ...
        0, input_layer_size, hidden_layer_size, num_labels, k, ...
        HTr, HTe, STr, STe, J, xF, yF, x2F, y2F);
-   save('OvM','HTr','HTe','STr','STe');
+   ovm = matfile('OvO.mat','Writable',true);
+   ovm.HTr(1:size(HTr,1),J) = HTr(:,J);
+   ovm.HTe(1:size(HTe,1),J) = HTe(:,J);
+   ovm.STr(1:size(STr,1),J) = STr(:,J);
+   ovm.STe(1:size(STe,1),J) = STe(:,J);
+%    save('OvM','HTr','HTe','STr','STe');
 end
 
