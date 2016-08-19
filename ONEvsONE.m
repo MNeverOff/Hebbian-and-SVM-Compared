@@ -10,6 +10,10 @@ Theta2 = SVMLearn(Theta1, Theta2, desired_digit, input_layer_size,...
                           hidden_layer_size, num_labels, xF, yF, k);
                       
 %% =================  Prediction with SVM against 1 digit =================
+T1string = sprintf('S%d_%dTheta1',desired_digit,second_digit);
+T2string = sprintf('S%d_%dTheta2',desired_digit,second_digit);
+S = struct(T1string,Theta1,T2string,Theta2);
+save('OvMS.mat', '-struct', 'S', '-append');
 
 pred = predictSVM(Theta1, Theta2, xF);
 yP = yF == desired_digit;
@@ -47,7 +51,12 @@ Theta2 = HebbLearn(Theta1, Theta2, desired_digit, input_layer_size, ...
                           hidden_layer_size, num_labels, xF, yF, k);
                       
 %% ================= Prediction with Hebb against 1 digit =================                  
-                      
+                 
+T1string = sprintf('H%d_%dTheta1',desired_digit,second_digit);
+T2string = sprintf('H%d_%dTheta2',desired_digit,second_digit);
+S = struct(T1string,Theta1,T2string,Theta2);
+save('OvOH.mat', '-struct', 'S', '-append');
+
 pred = predictSVM(Theta1, Theta2, xF);
 yP = yF == desired_digit;
 acc = mean(double(pred == yP)) * 100;

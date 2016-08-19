@@ -30,10 +30,10 @@ X2 = loadMNISTImages('t10k-images.idx3-ubyte')';
 y2 = loadMNISTLabels('t10k-labels.idx1-ubyte');
 
 % Randomly select 100 data points to display
-m = size(X, 1);
-rand_indices = randperm(m);
-sel = X((rand_indices(1:100)), :);
-displayData(sel);
+% m = size(X, 1);
+% rand_indices = randperm(m);
+% sel = X((rand_indices(1:100)), :);
+% displayData(sel);
 
 %% ================ Initializing Pameters ================
 fprintf('\n Initializing Neural Network Parameters ...\n')
@@ -43,16 +43,16 @@ Theta2 = abs(randInitializeWeights(hidden_layer_size, num_labels));
 
 %% ================ Calling methods ================
 if (one)
-   for second_digit = 0:9
-       close all; 
-       fprintf('\n Balancing data sets ...\n');
+   for second_digit = desired_digit+1:9
+        close all; 
+        fprintf('\n Balancing data sets ...\n');
 
 %        xF = X; yF = y;
            [xF,yF] = balanceSet(X,y,desired_digit,second_digit);
            [x2F,y2F] = balanceSet(X2,y2,desired_digit,second_digit);
 %        x2F = X2; y2F = y2;
 
-       [HTr,HTe,STr,STe] = ONEvsONE(svm, hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, ...
+        [HTr,HTe,STr,STe] = ONEvsONE(svm, hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, ...
            second_digit, input_layer_size, hidden_layer_size, num_labels, k, ...
            HTr, HTe, STr, STe, J, xF, yF, x2F, y2F);
    end
