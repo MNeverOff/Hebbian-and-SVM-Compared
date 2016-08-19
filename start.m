@@ -30,10 +30,10 @@ X2 = loadMNISTImages('t10k-images.idx3-ubyte')';
 y2 = loadMNISTLabels('t10k-labels.idx1-ubyte');
 
 % Randomly select 100 data points to display
-% m = size(X, 1);
-% rand_indices = randperm(m);
-% sel = X(rand_indices(1:100), :);
-% displayData(sel);
+m = size(X, 1);
+rand_indices = randperm(m);
+sel = X((rand_indices(1:100)), :);
+displayData(sel);
 
 %% ================ Initializing Pameters ================
 fprintf('\n Initializing Neural Network Parameters ...\n')
