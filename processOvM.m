@@ -1,7 +1,7 @@
 function processOvM()
 %PROCESSOVM Summary of this function goes here
 %   Detailed explanation goes here
-
+close all; clear all; clc;
 load('OvM.mat');
 
 dA = [0:9];
@@ -26,10 +26,10 @@ for Q=1:size(dA,2)
     end
 end
 
-processDataTable(STr,p);
-processDataTable(STe,p);
-processDataTable(HTr,p);
-processDataTable(HTe,p);
+% processDataTable(STr,p);
+processDataTable(STe,p,'SVM');
+% processDataTable(HTr,p);
+% processDataTable(HTe,p);
 
 % max(STe(5,:))
 % max(STe(8,:))

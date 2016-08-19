@@ -1,7 +1,7 @@
-function processOvM()
+function processOvO()
 %PROCESSOVM Summary of this function goes here
 %   Detailed explanation goes here
-
+close all; clear all; clc;
 load('OvO.mat');
 
 dA = [0:9];
@@ -9,9 +9,14 @@ iA = [1:5];             %1 is done in 10s, so this is 15x multiplier
 kA = [0.000001 0.000003 0.00001 0.00003 0.0001 0.0003 0.001 0.003 0.01 0.03];
 sA = [100 300 1000];    %100 is done in 10s, so this is x+3x+10x = 14x multiplier
 
+pO = zeros(4,size(dA,2)*size(iA,2)*size(kA,2)*size(sA,2));
 p = zeros(4,size(dA,2)*size(iA,2)*size(kA,2)*size(sA,2));
-i = 1;
+STr1 = STr;
+STe1 = STe;
+HTr1 = HTr;
+HTe1 = HTe;
 
+i = 1;
 for Q=1:size(iA,2)
     for W=1:size(dA,2)
         for E=1:size(kA,2)
@@ -26,10 +31,37 @@ for Q=1:size(iA,2)
     end
 end
 
-processDataTable(STr,p);
-processDataTable(STe,p);
-processDataTable(HTr,p);
-processDataTable(HTe,p);
+i = 1;
+for Q=1:size(dA,2)
+    for W=1:size(iA,2)
+        for E=1:size(kA,2)
+           for R=1:size(sA,2)
+              pO(1:1,i) = dA(Q);
+              pO(2:2,i) = iA(W);
+              pO(3:3,i) = kA(E);
+              pO(4:4,i) = sA(R);
+              i = i+1;
+           end
+        end
+    end
+end
+
+for I=1:size(p,2)
+    d = find(p(1,:) == pO(1,I));
+    i = find(p(2,:) == pO(2,I));
+    k = find(p(3,:) == pO(3,I));
+    s = find(p(4,:) == pO(4,I));
+    nI = intersect(intersect(intersect(d,i),k),s);
+    STr1(:,I) = STr(:,nI);
+    STe1(:,I) = STe(:,nI);
+    HTr1(:,I) = HTr(:,nI);
+    HTe1(:,I) = HTe(:,nI);
+end
+
+% processDataTable(reorg(STr1),p);
+processDataTable(reorg(STe1),p,'SVM');
+% processDataTable(reorg(HTr1),p);
+processDataTable(reorg(HTe1),p,'Hebbian');
 
 % max(STe(5,:))
 % max(STe(8,:))
