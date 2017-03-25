@@ -5,7 +5,7 @@ function [HTr,HTe,STr,STe] = start(one, many, svm, hebb, desired_digit, iteratio
 %% Setup the parameters of model
 
 input_layer_size  = 784;    % 28x28 Input Images of Digits
-hidden_layer_size = s;   % hidden units
+hidden_layer_size = s;      % hidden units
 num_labels = 2;             % 2 labels, n1 and n2 (isN, notN)
 % k = 0.001;                  % learning rate
 connectivity_rate = 0.1;    % connectivity rate
@@ -30,13 +30,13 @@ X2 = loadMNISTImages('t10k-images.idx3-ubyte')';
 y2 = loadMNISTLabels('t10k-labels.idx1-ubyte');
 
 % Randomly select 100 data points to display
-% m = size(X, 1);
-% rand_indices = randperm(m);
-% sel = X((rand_indices(1:100)), :);
-% displayData(sel);
+m = size(X, 1);
+rand_indices = randperm(m);
+sel = X((rand_indices(1:100)), :);
+displayData(sel);
 
 %% ================ Initializing Pameters ================
-fprintf('\n Initializing Neural Network Parameters ...\n')
+fprintf('\n Initializing Neural Network Parameters ...\n');
 
 Theta1 = randInitializeConnections(input_layer_size, hidden_layer_size, connectivity_rate);
 Theta2 = abs(randInitializeWeights(hidden_layer_size, num_labels));
@@ -66,8 +66,8 @@ end
 if (many)
     fprintf('\n Extracting data sets ...\n');
            
-%     [xF,yF] = extractSet(X,y,desired_digit,10);
-    xF = X; yF = y;
+    [xF,yF] = extractSet(X,y,desired_digit,10);
+%     xF = X; yF = y;
 %     [x2F,y2F] = extractSet(X2,y2,desired_digit,10);
     x2F = X2; y2F = y2;
     

@@ -6,10 +6,10 @@ J = 1;
 %% Settings
 one = false;
 many = true;
-svm = true;
-hebb = false;
+svm = false;
+hebb = true;
 
-digit = 9;
+digit = 1;
 iterations = 1;
 k = 0.003;
 s = 1000;

@@ -29,7 +29,7 @@ end
 % processDataTable(STr,p);
 processDataTable(STe,p,'SVM');
 % processDataTable(HTr,p);
-% processDataTable(HTe,p,'Hebbian');
+processDataTable(HTe,p,'Hebbian');
 
 % max(STe(5,:))
 % max(STe(8,:))

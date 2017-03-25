@@ -21,5 +21,6 @@ maxFI = find(C(8,:) == max(C(8,:)));
 fprintf('\n SVM Test F1: %f, accuracy: %f (max is %f) \n Parameters: I:%d k:%d S:%d', maxF,C(7,maxFI),maxA,p(2,maxFI),p(3,maxFI),p(4,maxFI));
 
 % plotResultsLight(C);
-plotResultsFinal(C(5:8,:),p,name);
+% plotResultsFinal(C(5:8,:),p,name);
+plotResultsFinal2(C(5:8,:),p,name);
 end

@@ -19,8 +19,8 @@ example_height = (n / example_width);
 % Compute number of items to display
 display_rows = floor(sqrt(m));
 display_cols = ceil(m / display_rows);
-% display_rows = 1;
-% display_cols = 1;
+display_rows = 10;
+display_cols = 1;
 % Between images padding
 pad = 1;
 

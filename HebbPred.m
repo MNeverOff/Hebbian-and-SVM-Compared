@@ -2,7 +2,7 @@ X = loadMNISTImages('t10k-images.idx3-ubyte')';
 y = loadMNISTLabels('t10k-labels.idx1-ubyte');
 pred = zeros(size(y));
 predTable = zeros(size(y,1),10);
-load('OH');
+load('MS');
 
 for i=1:size(pred,1)
    k = find(predTable(i,:) == max(predTable(i,:)));

@@ -1,4 +1,4 @@
-function [Theta2] = SVMLearn(Theta1, Theta2, ...
+function [Theta2] = HebbLearn(Theta1, Theta2, ...
                                    desired_digit, ...
                                    input_layer_size, ...
                                    hidden_layer_size, ...
@@ -85,40 +85,40 @@ end
 % -------------------------------------------------------------
 
 % Histogramm of active ("decicion-making") neurons
-% figure;
-% five = find(y == desired_digit);
-% nf = find(y ~= desired_digit);
-% score=(sum(L(:,five),2)-sum(L(:,nf),2))./(sum(L,2)+1);
-% hist(score)
-% 
-% % Theta1 hits
-% [A B]=sort(L(:,1),1);
-% figure;
-% C= L(B,:);
-% imagesc(C(:,1:25))
-% set(gca,'xticklabel',y);
-% set(gca,'xtick',1:25);
-% 
-% % score-weight "Five" matrix
-% figure;
-% title('Weight/Score for Positive');
-% scatter(Theta2(1,:),score)
-% xlabel('Weights') % x-axis label
-% ylabel('Scores') % y-axis label
-% 
-% % score-weight "Not-Five" matrix
-% figure;
-% title('Weight/Score for Negative');
-% scatter(Theta2(2,:),score)
-% xlabel('Weights') % x-axis label
-% ylabel('Scores') % y-axis label
-% 
-% %tracking
-% fprintf('\n Average neuron hit percent: %f', mean(hit_percents));
-% fprintf('\n Added to w1 in total: %f (%d)', w1p,w1pc);
-% fprintf('\n Substracted from w1 in total: %f (%d)', w1m, w1mc);
-% fprintf('\n Added to w2 in total: %f (%d)', w2p, w2pc);
-% fprintf('\n Substracted from w2 in total: %f (%d)', w2m, w2mc);
+figure;
+five = find(y == desired_digit);
+nf = find(y ~= desired_digit);
+score=(sum(L(:,five),2)-sum(L(:,nf),2))./(sum(L,2)+1);
+hist(score)
+
+% Theta1 hits
+[A B]=sort(L(:,1),1);
+figure;
+C= L(B,:);
+imagesc(C(:,1:25))
+set(gca,'xticklabel',y);
+set(gca,'xtick',1:25);
+
+% score-weight "Five" matrix
+figure;
+title('Weight/Score for Positive');
+scatter(Theta2(1,:),score)
+xlabel('Weights') % x-axis label
+ylabel('Scores') % y-axis label
+
+% score-weight "Not-Five" matrix
+figure;
+title('Weight/Score for Negative');
+scatter(Theta2(2,:),score)
+xlabel('Weights') % x-axis label
+ylabel('Scores') % y-axis label
+
+%tracking
+fprintf('\n Average neuron hit percent: %f', mean(hit_percents));
+fprintf('\n Added to w1 in total: %f (%d)', w1p,w1pc);
+fprintf('\n Substracted from w1 in total: %f (%d)', w1m, w1mc);
+fprintf('\n Added to w2 in total: %f (%d)', w2p, w2pc);
+fprintf('\n Substracted from w2 in total: %f (%d)', w2m, w2mc);
 
 % =========================================================================
 
