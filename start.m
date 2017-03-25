@@ -4,11 +4,11 @@ function [HTr,HTe,STr,STe] = start(one, many, svm, hebb, desired_digit, iteratio
 
 %% Setup the parameters of model
 
-input_layer_size  = 784;    % 28x28 Input Images of Digits
-hidden_layer_size = s;      % hidden units
-num_labels = 2;             % 2 labels, n1 and n2 (isN, notN)
+input_layer_size  = 784;        % 28x28 Input Images of Digits
+hidden_layer_size = s;          % hidden units
+num_labels = 2;                 % 2 labels, n1 and n2 (isN, notN)
 % k = 0.001;                  % learning rate
-connectivity_rate = 0.1;    % connectivity rate
+connectivity_rate = 0.1;        % connectivity rate
 % desired_digit = 5;          % digit to classify
 % second_digit = 4;           % second digit to pick
 

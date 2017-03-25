@@ -3,6 +3,11 @@ function [] = wrapper()
 %%clear; 
 close all; clc;
 J = 1;
+addpath(genpath('Data/'));
+addpath(genpath('Functions/'));
+addpath(genpath('Inputs/'));
+addpath(genpath('Utilities/'));
+
 %% Settings
 one = false;
 many = true;
