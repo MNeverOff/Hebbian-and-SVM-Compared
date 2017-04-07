@@ -18,10 +18,10 @@ digit = 1;
 iterations = 1;
 k = 0.003;
 s = 1000;
-HTr = zeros(40,iterations);
-HTe = zeros(40,iterations);
-STr = zeros(40,iterations);
-STe = zeros(40,iterations);
+HTr = zeros(40,iterations); % Hebb training
+HTe = zeros(40,iterations); % Hebb test
+STr = zeros(40,iterations); % SVM training
+STe = zeros(40,iterations); % SVM test
 
 %% Function call
 [HTr,HTe,STr,STe] = start(one, many, svm, hebb, digit, iterations, k, s, J, HTr, HTe, STr, STe);
