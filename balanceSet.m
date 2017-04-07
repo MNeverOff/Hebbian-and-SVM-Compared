@@ -1,7 +1,7 @@
 function [xB,yB] = balanceSet(X,y,digit1,digit2)
 %HEAVE Compute heaviside functoon
 %   g = HEAVE(z) computes the heaviside of z.
-input_layer_size = size(X,2);
+input_layer_size = size(X,2); 
 
 yF = [];
 for I=1:size(y,1)
