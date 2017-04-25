@@ -1,6 +1,13 @@
-function [HTr,HTe,STr,STe] = start(one, many, svm, hebb, desired_digit, iterations, k, s, J, ...
+function start(options, desired_digit, iterations, k, s, J, ...
                                 HTr,HTe,STr,STe)
+% start  Model startpoint. Accepts a number of options.
+%   options = [one,many,svm,hebb]:
+%       one - enables one vs one structure model
 
+%   C = ADDME(A) adds A to itself.
+%   C = ADDME(A,B) adds A and B together.
+%
+%   See also SUM, PLUS.
 
 %% Setup the parameters of model
 
@@ -42,7 +49,7 @@ Theta1 = randInitializeConnections(input_layer_size, hidden_layer_size, connecti
 Theta2 = abs(randInitializeWeights(hidden_layer_size, num_labels));
 
 %% ================ Calling methods ================
-if (one)
+if (options.one)
    for second_digit = desired_digit+1:9
         close all; 
         fprintf('\n Balancing data sets ...\n');
@@ -52,7 +59,7 @@ if (one)
            [x2F,y2F] = balanceSet(X2,y2,desired_digit,second_digit);
 %        x2F = X2; y2F = y2;
 
-        [HTr,HTe,STr,STe] = ONEvsONE(svm, hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, ...
+        [HTr,HTe,STr,STe] = ONEvsONE(options.svm, options.hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, ...
            second_digit, input_layer_size, hidden_layer_size, num_labels, k, ...
            HTr, HTe, STr, STe, J, xF, yF, x2F, y2F);
    end
@@ -63,7 +70,7 @@ if (one)
    ovm.STe(1:size(STe,1),J) = STe(:,J);
 end
 
-if (many)
+if (options.many)
     fprintf('\n Extracting data sets ...\n');
            
     [xF,yF] = extractSet(X,y,desired_digit,10);
@@ -72,7 +79,7 @@ if (many)
     x2F = X2; y2F = y2;
     
    close all; 
-   [HTr,HTe,STr,STe] = ONEvsONE(svm, hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, ...
+   [HTr,HTe,STr,STe] = ONEvsONE(options.svm, options.hebb, X, y, X2, y2, Theta1, Theta2, desired_digit, ...
        0, input_layer_size, hidden_layer_size, num_labels, k, ...
        HTr, HTe, STr, STe, J, xF, yF, x2F, y2F);
    ovm = matfile('OvO.mat','Writable',true);

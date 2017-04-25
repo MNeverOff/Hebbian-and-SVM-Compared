@@ -3,16 +3,17 @@ function [] = wrapper()
 %%clear; 
 close all; clc;
 J = 1;
+addpath(genpath('Classes/'));
 addpath(genpath('Data/'));
 addpath(genpath('Functions/'));
 addpath(genpath('Inputs/'));
 addpath(genpath('Utilities/'));
 
 %% Settings
-one = false;
-many = true;
-svm = false;
-hebb = true;
+options.one = false;
+options.many = true;
+options.svm = false;
+options.hebb = true;
 
 digit = 1;
 iterations = 1;
@@ -24,7 +25,7 @@ STr = zeros(40,iterations); % SVM training
 STe = zeros(40,iterations); % SVM test
 
 %% Function call
-[HTr,HTe,STr,STe] = start(one, many, svm, hebb, digit, iterations, k, s, J, HTr, HTe, STr, STe);
+start(options, digit, iterations, k, s, J, HTr, HTe, STr, STe);
 
 %% Save to files
 fprintf('\n Data collection finished \n');
