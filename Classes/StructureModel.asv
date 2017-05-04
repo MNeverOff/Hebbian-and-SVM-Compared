@@ -52,10 +52,19 @@ classdef (Abstract) StructureModel
             obj.Log.initial = {obj.Input, obj.Layers, obj.Output};
         end
         
-        function obj = Init(obj, dataSet)
+        function obj = Init(obj, dataSet, thetaFunction)
             [obj.Input.values, obj.Input.labels] = balanceSet(...
                 dataSet.values, dataSet.labels, obj.Output.labels(1), obj.Output.labels(1));
             obj.Layers(1).values = obj.Input.values;
+            
+            % Here init theta1 and theta2-N, preferably with a function
+            % handler
+            % Theta1 = randInitializeConnections(input_layer_size, hidden_layer_size, connectivity_rate);
+            % Theta2 = abs(randInitializeWeights(hidden_layer_size, num_labels));
+            
+            for I = 1:size(obj.Layers)
+               obj.Layers(I).weights = thetaFunction;
+            end
             
             obj.Log.init = {obj.Input, obj.Layers, obj.Output};
         end
