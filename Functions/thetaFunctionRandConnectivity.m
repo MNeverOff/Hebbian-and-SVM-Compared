@@ -1,4 +1,4 @@
-function [Theta] = thetaFunction(sizes, r)
+function [Theta] = thetaFunctionRandConnectivity(sizes, r)
 %THETAFUNCTION Summary of this function goes here
 %   Detailed explanation goes here
 

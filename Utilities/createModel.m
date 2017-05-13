@@ -7,9 +7,9 @@ function obj = createModel(code, Config)
 %networkDepth =  size(modelDefinition,2);
 
 switch code
-    case "OvO"
-        obj = OneVsOneModel(Config.Sizes, Config.Labels, Config.ThetaFunction);
-    case "OvM"
+    case string('OvO')
+        obj = OneVsOneModel(Config.Sizes, Config.Labels, @Config.ThetaFunction);
+    case string('OvM')
         %modelDefinition(networkDepth) = 2;
         %obj = OneVsManyModel(modelDefinition);
     otherwise

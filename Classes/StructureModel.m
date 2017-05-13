@@ -10,7 +10,7 @@ classdef (Abstract) StructureModel
     end
     
     methods
-        function obj = StructureModel(modelDefinition, labels)
+        function obj = StructureModel(modelDefinition, labels, thetaFunction)
             if nargin == 0
                 % Handle the no-argument case
                 error('Defined dimentions are invalid')
@@ -22,7 +22,7 @@ classdef (Abstract) StructureModel
             end
             
             if (size(modelDefinition,2) >= 2)
-                obj = CreateStructure(obj, modelDefinition, labels);     
+                obj = CreateStructure(obj, modelDefinition, labels, thetaFunction);     
             else
                 error('Defined dimentions are invalid')
             end
@@ -39,7 +39,7 @@ classdef (Abstract) StructureModel
             obj.Output.values = zeros(modelDefinition(networkWidth),1);
             obj.Output.labels = labels;
 
-            theta = thetaFunction(thetaFunction, 0.1); % second param is random connectivity rate
+            theta = thetaFunction(modelDefinition, 0.1); % second param is random connectivity rate
             
             % for each inner layer
             for i=2:networkWidth-1
@@ -52,22 +52,13 @@ classdef (Abstract) StructureModel
             obj.Log.initial = {obj.Input, obj.Layers, obj.Output};
         end
         
-        function obj = Init(obj, dataSet)
-            [obj.Input.values, obj.Input.labels] = balanceSet(...
-                dataSet.values, dataSet.labels, obj.Output.labels(1), obj.Output.labels(1));
-            obj.Layers(1).values = obj.Input.values;
-            
-            obj.Log.init = {obj.Input, obj.Layers, obj.Output};
-        end
-        
         function obj = Predict(obj, dataSet)
             obj.Input = dataSet;
         end
     end
     
-    
-    
     methods (Abstract)
+        obj = Init(obj, dataSet)
         obj = Train(obj, learningModel)
     end
     
