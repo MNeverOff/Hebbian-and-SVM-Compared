@@ -14,10 +14,10 @@ TestSet = {};
 Config = {};
 
 % Temporary hard-code
-Config.Models = ["OvO"];
+Config.Models = [string('OvO')];
 Config.Sizes = [0 1000 2];
 Config.Labels = [3 5];
-Config.ThetaFunction = @thetaFunction;
+Config.ThetaFunction = @thetaFunctionRandConnectivity;
 
 %% ================ Loading and Visualizing Data ================
 
@@ -43,8 +43,8 @@ displayData(sel);
 
 % Launching models
 for i=1:size(Config.Models,2)
-    model = createModel(Config.Models(1), Config);
-    model = model.Init(TrainingSet, Config);
+    model = createModel(Config.Models(i), Config);
+    model = model.Init(model, TrainingSet);
     model = model.Prepare();
     results = model.Run();
     log = model.Log();

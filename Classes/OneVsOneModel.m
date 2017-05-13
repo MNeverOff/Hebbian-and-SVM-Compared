@@ -7,8 +7,16 @@ classdef OneVsOneModel < StructureModel
     end
     
     methods
-        function obj = OneVsOneModel(modelDefinition, labels)
-            obj = obj@StructureModel(modelDefinition, labels);
+        function obj = OneVsOneModel(modelDefinition, labels, thetaFunction)
+            obj = obj@StructureModel(modelDefinition, labels, thetaFunction);
+        end
+        
+        function obj = Init(obj, dataSet)
+            [obj.Input.values, obj.Input.labels] = BalanceSet(...
+                dataSet.values, dataSet.labels, obj.Output.labels(1), obj.Output.labels(1));
+            obj.Layers(1).values = obj.Input.values;
+            
+            obj.Log.init = {obj.Input, obj.Layers, obj.Output};
         end
         
         function [balancedValues,balancedLabels] = BalanceSet(values, ...
