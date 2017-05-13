@@ -1,3 +1,4 @@
+%%
 %% ================        Initialization        ================
 clear all; clc;
 addpath(genpath('Classes/'));
