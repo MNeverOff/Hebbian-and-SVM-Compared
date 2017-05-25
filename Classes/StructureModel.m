@@ -55,11 +55,14 @@ classdef (Abstract) StructureModel
         function obj = Predict(obj, dataSet)
             obj.Input = dataSet;
         end
+        
+        function obj = Train(obj, dataSet, learningModelName)
+            
+        end
     end
     
     methods (Abstract)
         obj = Init(obj, dataSet)
-        obj = Train(obj, learningModel)
     end
     
 end

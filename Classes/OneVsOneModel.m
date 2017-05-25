@@ -12,14 +12,15 @@ classdef OneVsOneModel < StructureModel
         end
         
         function obj = Init(obj, dataSet)
-            [obj.Input.values, obj.Input.labels] = BalanceSet(...
-                dataSet.values, dataSet.labels, obj.Output.labels(1), obj.Output.labels(1));
+            [obj.Input.values, obj.Input.labels] = obj.BalanceSet(...
+                dataSet.values, dataSet.labels, obj.Output.labels(1), obj.Output.labels(2));
             obj.Layers(1).values = obj.Input.values;
             
             obj.Log.init = {obj.Input, obj.Layers, obj.Output};
         end
         
-        function [balancedValues,balancedLabels] = BalanceSet(values, ...
+        % Change to label-less balancing, leave as aux method
+        function [balancedValues, balancedLabels] = BalanceSet(obj, values, ...
                 labels, label1, label2)
             %BalanceSet Balance the set: creates an equal distribution of
             %two digits from the data set with values and labels
@@ -42,7 +43,7 @@ classdef OneVsOneModel < StructureModel
 
             % Creating values array and getting correct labels again
             j = 1;
-            for I=1:size(y,1)
+            for I=1:size(labels,1)
                if (labels(I) == label1 || labels(I) == label2)
                   xF(j,:) = values(I,:);
                   j = j+1;
@@ -52,7 +53,7 @@ classdef OneVsOneModel < StructureModel
             balancedValues = xF; balancedLabels = yF;
         end
         
-        function Train()
+        function Train(obj, dataSet)
             
         end
     end

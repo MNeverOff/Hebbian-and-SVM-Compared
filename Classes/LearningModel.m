@@ -10,5 +10,8 @@ classdef LearningModel
         
     end
     
+    methods (Abstract)
+        obj = Run(obj, Theta, values, labels, )
+    end
+    
 end
-

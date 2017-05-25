@@ -6,7 +6,6 @@ addpath(genpath('Data/'));
 addpath(genpath('Functions/'));
 addpath(genpath('Inputs/'));
 addpath(genpath('Utilities/'));
-addpath(genpath('LearningFunctions/'));
 
 
 %% ================        Model Constants       ================
@@ -16,10 +15,10 @@ Config = {};
 
 % Temporary hard-code
 Config.Models = [string('OvO')];
-Config.LearningFunctions = {@hebbLearn, @SVMLearn};
+Config.Learning = [string('SvM') string('Hebbian')];
 Config.Sizes = [0 1000 2];
 Config.ThetaFunction = @thetaFunctionRandConnectivity;
-Config.Classes = [3 5]; % 0 1 2 3 4 5 6 7 8 9
+Config.Classes = [0 1 2 3 4 5 6 7 8 9];
 
 %% ================ Loading and Visualizing Data ================
 
@@ -44,20 +43,20 @@ displayData(sel);
 %% ================       Model execution       ================
 
 % Launching models
-for i=1:size(Config.Models,2)                       % All structure models
-    for l=1:size(Config.LearningFunctions,2)        % All learning models
-        for j = 1:size(Config.Classes,2)            % All classes (first)
-            for k = 1:size(Config.Classes,2)        % Against all other classes (second)
-                if (j ~= k)                         % don't compare class with itself
-                    Config.Labels = [j k];
-                    model = createModel(Config.Models(i), Config);
-                    model = model.Init(TrainingSet);
-                    results = model.Train(TrainingSet, Config.Learning(l));
-                    log = model.Log();
-                end
-            end
-        end
-        
+for i=1:size(Config.Models,2)
+    for l=1:size(Config.Learning,2)
         
     end
+    for j = 1:size(Config.Classes,2)
+        for k = 1:size(Config.Classes,2)
+            if (j ~= k)
+                COnfig.Labels = [j k];
+                model = createModel(Config.Models(i), Config);
+                model = model.Init(TrainingSet);
+                results = model.Train(TrainingSet, Config.Learning(l));
+                log = model.Log();
+            end
+        end
+    end
+    
 end
