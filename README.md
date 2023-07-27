@@ -45,6 +45,10 @@ The hypothesis is also tested in two main cases:
 - One vs One (`OvO`), where for each class pair (i.e. `3` and `5`) examples crom the balanced set of only those digits are taken and it's decided whether the digit belongs to the first or the second class. This results in 45 (C<sup>2</sup><sub>10</sub>) classifiers
 - One vs Many (`OvM`), where for there is a classifier for each digit, which decides whether the digit belongs to the class or not. This results in 10 classifiers
 
+### Improvements
+
+Throughout 2017 improvements were introduced to transition the original functional approach to a more object-oriented one, which resulted in a more modular and extensible codebase.
+
 ### Tools Used
 
 The models were implemented in Matlab with the code for classes, supporting functions, runner scripts for each of the four comparisons and auxiliary data enclosed.
