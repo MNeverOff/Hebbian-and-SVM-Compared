@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository encloses the programmatic part of the research into equivalence of Hennian learning and the SVN formalism, exploring thesies brought forward in [On the equivalence of Hebbian learning and the SVM formalism](https://ieeexplore.ieee.org/document/6310939) [Nowotny, T and Huerta, R]
+This repository encloses the programmatic part of the research into equivalence of Hebbian learning and the SVN formalism, exploring hypothesis brought forward in [On the equivalence of Hebbian learning and the SVM formalism](https://ieeexplore.ieee.org/document/6310939) [Nowotny, T and Huerta, R]
 
 ![Olfactory classification model](media/Olfactory%20Model.png)
 
